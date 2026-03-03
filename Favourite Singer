@@ -1,0 +1,21 @@
+import sys
+
+def solve():
+    line1 = sys.stdin.readline()
+    if not line1: return
+    n = int(line1)
+    singers = list(map(int, sys.stdin.readline().split()))
+    counts = {}
+    for singer in singers:
+        counts[singer] = counts.get(singer, 0) + 1
+    max_songs = 0
+    if counts:
+        max_songs = max(counts.values())
+    fav_singers = 0
+    for count in counts.values():
+        if count == max_songs:
+            fav_singers += 1
+            
+    print(fav_singers)
+
+solve()
