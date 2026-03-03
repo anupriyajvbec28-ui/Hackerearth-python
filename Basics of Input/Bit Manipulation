@@ -1,0 +1,57 @@
+import sys
+
+def count_set_bits(n):
+    count = 0
+    while n > 0:
+        n &= (n - 1)
+        count += 1
+    return count
+
+def solve():
+    try:
+        line1 = sys.stdin.readline()
+        if not line1:
+            return
+        
+        n_str = line1.split()
+        if not n_str:
+            return solve() 
+        n = int(n_str[0])
+        
+        line2 = sys.stdin.readline()
+        if not line2:
+            return
+        
+        arr = list(map(int, line2.split()))
+        
+        if not arr:
+            return
+        def sort_key(num):
+            bit_count = count_set_bits(num)
+            parity = bit_count % 2
+            return (parity, num)
+
+        arr.sort(key=sort_key)
+        
+        print(*(arr))
+
+    except EOFError:
+        pass
+    except ValueError:
+        pass
+
+def main():
+    try:
+        T_line = sys.stdin.readline()
+        if not T_line:
+            return
+        T = int(T_line)
+        for _ in range(T):
+            solve()
+    except EOFError:
+        pass
+    except ValueError:
+        pass
+
+if __name__ == '__main__':
+    main()
