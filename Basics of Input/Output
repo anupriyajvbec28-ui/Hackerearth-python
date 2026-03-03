@@ -1,0 +1,10 @@
+try:
+    N = int(input())
+    S = input()
+    processed_N = N * 2
+    print(processed_N)
+    print(S)
+except ValueError:
+    print("Invalid input format. Please provide an integer in the first line and a string in the second line.")
+except EOFError:
+    print("No input provided.")
