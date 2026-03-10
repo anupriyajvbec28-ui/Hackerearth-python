@@ -1,0 +1,23 @@
+import sys
+def solve():
+    try: 
+        line1 = sys.stdin.readline()
+        if not line1:
+            return
+        t = int(line1.strip())
+    except ValueError:
+        return
+
+    for _ in range(t):
+        s = sys.stdin.readline().strip()
+        if not s:
+            continue
+        sorted_chars = sorted(s)
+        sorted_s = "".join(sorted_chars)
+        if sorted_s == sorted_s[::-1]:
+            print("-1")
+        else:
+            print(sorted_s)
+
+if __name__ == '__main__':
+    solve()
