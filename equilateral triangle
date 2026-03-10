@@ -1,0 +1,17 @@
+import sys
+def solve():
+    line = sys.stdin.readline()
+    if not line:
+        return
+    n = int(line.strip())
+    
+    total_rectangles = 0
+    for r_top in range(n + 1):
+        for k in range(1, (n - r_top) // 2 + 1):
+            ways_to_pick_two = (r_top + 1) * r_top // 2
+            total_rectangles += ways_to_pick_two
+            
+    print(total_rectangles)
+
+if __name__ == "__main__":
+    solve()
