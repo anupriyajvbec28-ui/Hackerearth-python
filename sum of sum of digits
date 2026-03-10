@@ -1,0 +1,44 @@
+import sys
+def get_digit_value(n):
+    if n == 0:
+        return 0
+    return (n - 1) % 9 + 1
+
+def solve():
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    N = int(input_data[0])
+    Q = int(input_data[1])
+    
+    A = []
+    idx = 2
+    for i in range(N):
+        A.append(int(input_data[idx]))
+        idx += 1
+    digit_values = []
+    for num in A:
+        digit_values.append(get_digit_value(num))
+    digit_values.sort()
+    prefix_sums = [0] * (N + 1)
+    for i in range(N):
+        prefix_sums[i+1] = prefix_sums[i] + digit_values[i]
+        
+    results = []
+    for i in range(Q):
+        query_type = int(input_data[idx])
+        K = int(input_data[idx+1])
+        idx += 2
+        
+        if query_type == 1:
+            max_sum = prefix_sums[N] - prefix_sums[N-K]
+            results.append(str(max_sum))
+        else:
+            min_sum = prefix_sums[K]
+            results.append(str(min_sum))
+            
+    sys.stdout.write("\n".join(results) + "\n")
+
+if __name__ == '__main__':
+    solve()
