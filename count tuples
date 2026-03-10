@@ -1,0 +1,45 @@
+import sys
+def solve():
+    input = sys.stdin.read().split()
+    if not input: return
+    idx = 0
+    t = int(input[idx])
+    idx += 1
+    for _ in range(t):
+        n = int(input[idx])
+        idx += 1
+        a = [int(x) for x in input[idx:idx+n]]
+        idx += n
+        sorted_unique = sorted(list(set(a)))
+        rank = {val: i + 1 for i, val in enumerate(sorted_unique)}
+        m = len(sorted_unique)
+        left_bit = [0] * (m + 1)
+        right_bit = [0] * (m + 1)
+        def update(bit, i, delta):
+            while i <= m:
+                bit[i] += delta
+                i += i & (-i)
+        def query(bit, i):
+            s = 0
+            while i > 0:
+                s += bit[i]
+                i -= i & (-i)
+            return s
+        for x in a:
+            update(right_bit, rank[x], 1)
+        ans = 0
+        for x in a:
+            r_idx = rank[x]
+            update(right_bit, r_idx, -1)
+            l_less = query(left_bit, r_idx - 1)
+            l_greater = query(left_bit, m) - query(left_bit, r_idx)
+            l_equal = query(left_bit, r_idx) - query(left_bit, r_idx - 1)
+            r_less = query(right_bit, r_idx - 1)
+            r_greater = query(right_bit, m) - query(right_bit, r_idx)
+            r_equal = query(right_bit, r_idx) - query(right_bit, r_idx - 1)
+            ans += (l_less + l_equal) * (r_greater + r_equal) + \
+                   (l_greater + l_equal) * (r_less + r_equal) - (l_equal * r_equal)
+            update(left_bit, r_idx, 1)
+        print(ans)
+if __name__ == "__main__":
+    solve()
