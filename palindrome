@@ -1,0 +1,17 @@
+import sys
+def solve():
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    t = int(input_data[0])
+    results = []
+    for i in range(1, t + 1):
+        s = input_data[i]
+        char_counts = {}
+        for char in s:
+            char_counts[char] = char_counts.get(char, 0) + 1
+        total_palindromes = sum(count // 2 for count in char_counts.values())
+        results.append(str(total_palindromes))
+    sys.stdout.write("\n".join(results) + "\n")
+if __name__ == "__main__":
+    solve()
