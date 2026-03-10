@@ -1,0 +1,3 @@
+C = input()
+ascii_value = ord(C)
+print(ascii_value)
