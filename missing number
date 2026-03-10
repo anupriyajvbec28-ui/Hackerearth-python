@@ -1,0 +1,34 @@
+import sys
+
+def solve():
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    it = iter(input_data)
+    try:
+        t_str = next(it)
+        t = int(t_str)
+    except StopIteration:
+        return
+    
+    results = []
+    for _ in range(t):
+        try:
+            n = int(next(it))
+            a = []
+            for _ in range(n):
+                a.append(int(next(it)))
+            a.sort()
+            target_even = 2
+            for x in a:
+                if x >= target_even:
+                    target_even += 2
+            
+            results.append(str(target_even))
+        except StopIteration:
+            break
+    sys.stdout.write("\n".join(results) + "\n")
+
+if __name__ == "__main__":
+    solve()
