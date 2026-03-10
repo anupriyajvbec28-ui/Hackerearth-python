@@ -1,0 +1,36 @@
+import sys
+def solve():
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    t = int(input_data[0])
+    idx = 1
+    results = []
+    for _ in range(t):
+        h = int(input_data[idx])
+        w = int(input_data[idx+1])
+        idx += 2
+        if h % 3 == 0 or w % 3 == 0:
+            results.append("0")
+            continue
+        min_diff = float('inf')
+        for H, W in [(h, w), (w, h)]:
+            h1 = H // 3
+            h2 = (H - h1) // 2
+            h3 = H - h1 - h2
+            areas1 = [h1 * W, h2 * W, h3 * W]
+            min_diff = min(min_diff, max(areas1) - min(areas1))
+            for i in range(1, H):
+                area1 = i * W
+                w_split1 = W // 2
+                w_split2 = W - w_split1
+                area2 = (H - i) * w_split1
+                area3 = (H - i) * w_split2
+                areas2 = [area1, area2, area3]
+                min_diff = min(min_diff, max(areas2) - min(areas2))
+                if min_diff <= 1:
+                    break
+        results.append(str(min_diff))
+    sys.stdout.write("\n".join(results) + "\n")
+if __name__ == "__main__":
+    solve()
