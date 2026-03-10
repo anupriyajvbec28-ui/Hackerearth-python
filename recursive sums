@@ -1,0 +1,28 @@
+import sys
+def solve():
+    try:
+        line = sys.stdin.readline()
+        if not line:
+            return
+        t = int(line.strip())
+    except EOFError:
+        return
+
+    for _ in range(t):
+        try:
+            m = int(sys.stdin.readline().strip())
+        except ValueError:
+            break
+            
+        total_sum = 0
+        for _ in range(m):
+            length, digit = map(int, sys.stdin.readline().split())
+            total_sum += length * digit
+        if total_sum == 0:
+            print(0)
+        else:
+            result = total_sum % 9
+            print(result if result != 0 else 9)
+
+if __name__ == '__main__':
+    solve()
