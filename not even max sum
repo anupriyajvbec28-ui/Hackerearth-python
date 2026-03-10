@@ -1,0 +1,28 @@
+def solve(n, arr):
+    total_sum = sum(arr)
+    if total_sum % 2 != 0:
+        return total_sum
+    smallest_odd = float('inf')
+    for num in arr:
+        if num % 2 != 0:
+            smallest_odd = min(smallest_odd, num)
+    if smallest_odd == float('inf'):
+        return 0
+    return total_sum - smallest_odd
+def main():
+    import sys
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    test_cases = int(input_data[0])
+    current_idx = 1 
+    for _ in range(test_cases):
+        if current_idx >= len(input_data):
+            break
+        n = int(input_data[current_idx])
+        current_idx += 1
+        arr = list(map(int, input_data[current_idx : current_idx + n]))
+        current_idx += n
+        print(solve(n, arr))
+if __name__ == "__main__":
+    main()
