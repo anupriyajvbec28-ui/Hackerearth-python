@@ -1,0 +1,15 @@
+import sys
+
+def solve():
+    line1 = sys.stdin.readline()
+    if not line1:
+        return
+    n = int(line1.strip())
+    line2 = sys.stdin.readline()
+    if not line2:
+        return
+    result = n * (n - 1)
+    print(result)
+
+if __name__ == "__main__":
+    solve()
