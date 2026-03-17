@@ -1,0 +1,22 @@
+def is_lucky(n):
+    if n < 0: return False
+    return all(int(digit) % 2 != 0 for digit in str(n))
+
+def find_nearest_lucky():
+    try:
+        n = int(input().strip())
+    except (ValueError, EOFError):
+        return
+
+    offset = 0
+    while True:
+        if is_lucky(n - offset):
+            print(n - offset)
+            break
+        if is_lucky(n + offset):
+            print(n + offset)
+            break
+        offset += 1
+
+if __name__ == "__main__":
+    find_nearest_lucky()
