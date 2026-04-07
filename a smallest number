@@ -1,0 +1,32 @@
+def solve():
+    try:
+        line1 = input().split()
+        if not line1: return
+        t = int(line1[0])
+    except EOFError:
+        return
+
+    for _ in range(t):
+        n = int(input())
+        
+        if n == 1:
+            print(1)
+            continue
+        found = False
+        for d2 in range(1, 10):
+            for d1 in range(d2, 10):
+                product = d2 * d1
+                total_sum = (n - 2) + d2 + d1
+                
+                if product >= total_sum:
+                    res = ['1'] * (n - 2)
+                    res.append(str(d2))
+                    res.append(str(d1))
+                    print("".join(res))
+                    found = True
+                    break
+            if found:
+                break
+
+if __name__ == "__main__":
+    solve()
