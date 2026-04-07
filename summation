@@ -1,0 +1,33 @@
+import sys
+
+def solve():
+    try:
+        line = sys.stdin.readline()
+        if not line:
+            return
+        t = int(line.strip())
+    except ValueError:
+        return
+
+    for _ in range(t):
+        try:
+            n = int(sys.stdin.readline().strip())
+        except ValueError:
+            break
+            
+        ans = 0
+        i = 1
+        while i <= n:
+            v = n // i
+            if v == 0:
+                break
+                
+            r = n // v
+            r = min(r, n)
+            ans += (r - i + 1) * v
+            i = r + 1
+            
+        print(ans)
+
+if __name__ == "__main__":
+    solve()
