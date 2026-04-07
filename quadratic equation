@@ -1,0 +1,33 @@
+import sys
+def solve():
+    try:
+        line1 = sys.stdin.readline()
+        if not line1: return
+        t = int(line1.strip())
+    except ValueError:
+        return
+
+    for _ in range(t):
+        try:
+            line = sys.stdin.readline().split()
+            if not line: break
+            l, r = map(int, line)
+        except ValueError:
+            break
+        
+        count = 0
+        for a in range(l, r + 1):
+            upper_m = int((a*a - l)**0.5)
+            upper_m = min(upper_m, a - 1)
+            lower_m_sq = max(0, a*a - r)
+            lower_m = int(lower_m_sq**0.5)
+            if lower_m * lower_m < lower_m_sq:
+                lower_m += 1
+            
+            if upper_m >= lower_m:
+                count += (upper_m - lower_m + 1)
+                
+        print(count)
+
+if __name__ == "__main__":
+    solve()
