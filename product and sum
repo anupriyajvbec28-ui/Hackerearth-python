@@ -1,0 +1,35 @@
+import sys
+def solve():
+    MOD = 10**9 + 7
+    line1 = sys.stdin.readline()
+    if not line1: return
+    t = int(line1.strip())
+    MAX_N = 100005
+    pow2 = [1] * MAX_N
+    inv2 = [1] * MAX_N
+    I2 = pow(2, MOD - 2, MOD)
+    for i in range(1, MAX_N):
+        pow2[i] = (pow2[i-1] * 2) % MOD
+        inv2[i] = (inv2[i-1] * I2) % MOD
+
+    for _ in range(t):
+        n = int(sys.stdin.readline().strip())
+        a = list(map(int, sys.stdin.readline().split()))
+        
+        if n < 2:
+            print(0)
+            continue
+        suffix_sum = [0] * (n + 1)
+        for j in range(n - 1, -1, -1):
+            term = (a[j] * inv2[j]) % MOD
+            suffix_sum[j] = (suffix_sum[j+1] + term) % MOD
+            
+        total_score = 0
+        for i in range(n - 1):
+            term_i = (a[i] * pow2[i]) % MOD
+            contribution = (term_i * suffix_sum[i+1]) % MOD
+            total_score = (total_score + contribution) % MOD
+        ans = (total_score * pow2[n-1]) % MOD
+        print(ans)
+
+solve()
