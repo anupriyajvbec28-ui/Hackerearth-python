@@ -1,0 +1,46 @@
+import math
+import sys
+
+def solve():
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    n = int(input_data[0])
+    arr = list(map(int, input_data[1:]))
+    arr.sort(reverse=True)
+    
+    max_total_sum = 0
+    unique_starts = sorted(list(set(arr)), reverse=True)
+    
+    for start_val in unique_starts:
+        temp_arr = arr[:]
+        temp_arr.remove(start_val)
+        
+        current_gcd = start_val
+        current_sum = start_val
+        while temp_arr:
+            best_gcd = -1
+            best_idx = -1
+            
+            for i in range(len(temp_arr)):
+                g = math.gcd(current_gcd, temp_arr[i])
+                if g > best_gcd:
+                    best_gcd = g
+                    best_idx = i
+                if best_gcd == current_gcd:
+                    break
+            
+            current_gcd = best_gcd
+            current_sum += current_gcd
+            temp_arr.pop(best_idx)
+            if current_gcd == 1:
+                current_sum += len(temp_arr)
+                break
+        
+        max_total_sum = max(max_total_sum, current_sum)
+        
+    print(max_total_sum)
+
+if __name__ == "__main__":
+    solve()
