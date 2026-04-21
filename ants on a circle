@@ -1,0 +1,23 @@
+import sys
+
+def solve():
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    n = int(input_data[0])
+    m = int(input_data[1])
+    t = int(input_data[2])
+    
+    final_positions = []
+    for i in range(m):
+        s = int(input_data[3 + i * 2])
+        d = int(input_data[4 + i * 2])
+        new_pos = (s - 1 + (d * t)) % n
+        final_positions.append(new_pos + 1)
+    final_positions.sort()
+
+    print(*(final_positions))
+
+if __name__ == "__main__":
+    solve()
