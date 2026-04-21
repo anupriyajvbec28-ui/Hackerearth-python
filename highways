@@ -1,0 +1,26 @@
+import sys
+
+def solve():
+    try:
+        line1 = sys.stdin.readline().split()
+        if not line1: return
+        n, m = map(int, line1)
+        
+        x_coords = []
+        y_coords = []
+        for _ in range(m):
+            x, y = map(int, sys.stdin.readline().split())
+            x_coords.append(x)
+            y_coords.append(y)
+        
+        if m == 0:
+            print(0)
+            return
+        min_x, max_x = min(x_coords), max(x_coords)
+        min_y, max_y = min(y_coords), max(y_coords)
+        ans = max((max_x - min_x + 1) // 2, (max_y - min_y + 1) // 2)
+        print(ans)
+    except ValueError:
+        pass
+
+solve()
