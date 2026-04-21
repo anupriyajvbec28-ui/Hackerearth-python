@@ -1,0 +1,30 @@
+import sys
+
+def solve():
+    line1 = sys.stdin.readline()
+    if not line1:
+        return
+    N = int(line1.strip())
+    
+   
+    line2 = sys.stdin.readline()
+    if not line2:
+        return
+    workload = list(map(int, line2.split()))
+
+    max_rating = 0
+    current_streak = 0
+    
+    for hours in workload:
+        if hours > 6:
+            current_streak += 1
+           
+            if current_streak > max_rating:
+                max_rating = current_streak
+        else:
+            current_streak = 0
+            
+    print(max_rating)
+
+if __name__ == "__main__":
+    solve()
