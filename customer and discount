@@ -1,0 +1,46 @@
+def maxCustomers(N, M, d, arr, cost):
+    arr.sort()
+    cost.sort()
+
+    def check(k):
+        if k == 0:
+            return True, 0
+        total_deficit = 0
+        total_item_cost = 0
+        
+        for i in range(k):
+            customer_money = arr[N - k + i]
+            item_price = cost[i]
+            total_item_cost += item_price
+            if item_price > customer_money:
+                total_deficit += (item_price - customer_money)
+        return total_deficit <= d, total_item_cost
+    low = 0
+    high = min(N, M)
+    max_k = 0
+    min_spent = 0
+
+    while low <= high:
+        mid = (low + high) // 2
+        possible, total_cost = check(mid)
+        
+        if possible:
+            max_k = mid
+            min_spent = max(0, total_cost - d)
+            low = mid + 1
+        else:
+            high = mid - 1
+
+    return [max_k, min_spent]
+if __name__ == "__main__":
+    import sys
+    input_data = sys.stdin.read().split()
+    if input_data:
+        N = int(input_data[0])
+        M = int(input_data[1])
+        d = int(input_data[2])
+        arr = list(map(int, input_data[3:3+N]))
+        cost = list(map(int, input_data[3+N:3+N+M]))
+
+        out_ = maxCustomers(N, M, d, arr, cost)
+        print(' '.join(map(str, out_)))
