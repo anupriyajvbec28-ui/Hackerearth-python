@@ -1,0 +1,52 @@
+import sys
+
+def solve():
+    try:
+        line1 = sys.stdin.readline()
+        if not line1:
+            return
+        n = int(line1.strip())
+        line2 = sys.stdin.readline()
+        if not line2:
+            return
+        arr = list(map(int, line2.split()))
+        line3 = sys.stdin.readline()
+        if not line3:
+            return
+        q = int(line3.strip())
+    except ValueError:
+        return
+    counts = {}
+    for x in arr:
+        counts[x] = counts.get(x, 0) + 1
+    freq_contribution = [0] * (n + 1)
+    for val, freq in counts.items():
+        if freq <= n:
+            freq_contribution[freq] += (val * freq)
+    prefix_sum = [0] * (n + 1)
+    current_running_sum = 0
+    for i in range(1, n + 1):
+        current_running_sum += freq_contribution[i]
+        prefix_sum[i] = current_running_sum
+    results = []
+    for _ in range(q):
+        try:
+            l, r = map(int, sys.stdin.readline().split())
+            if l > n:
+                results.append(0)
+                continue
+            
+            actual_l = max(1, l)
+            actual_r = min(n, r)
+            
+            if actual_l > actual_r:
+                results.append(0)
+            else:
+                ans = prefix_sum[actual_r] - prefix_sum[actual_l - 1]
+                results.append(ans)
+        except ValueError:
+            break
+    sys.stdout.write('\n'.join(map(str, results)) + '\n')
+
+if __name__ == "__main__":
+    solve()
