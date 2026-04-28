@@ -1,0 +1,65 @@
+import sys
+
+def solve():
+    # Read all input at once for efficiency
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+        
+    T_cases = int(input_data[0])
+    pointer = 1
+    
+    output = []
+    for _ in range(T_cases):
+        N = int(input_data[pointer])
+        M = int(input_data[pointer + 1])
+        pointer += 2
+        
+        A = list(map(int, input_data[pointer : pointer + N]))
+        pointer += N
+        B = list(map(int, input_data[pointer : pointer + M]))
+        pointer += M
+        
+        # If total sums don't match, it's impossible
+        if sum(A) != sum(B):
+            output.append("-1")
+            continue
+            
+        count = 0
+        sum_a = 0
+        sum_b = 0
+        i = 0
+        j = 0
+        
+        # Greedy approach: find as many equal prefix sums as possible
+        while i < N and j < M:
+            sum_a += A[i]
+            sum_b += B[j]
+            i += 1
+            j += 1
+            
+            while sum_a != sum_b:
+                if sum_a < sum_b:
+                    if i < N:
+                        sum_a += A[i]
+                        i += 1
+                    else:
+                        break
+                else:
+                    if j < M:
+                        sum_b += B[j]
+                        j += 1
+                    else:
+                        break
+            
+            if sum_a == sum_b:
+                count += 1
+                sum_a = 0
+                sum_b = 0
+                
+        output.append(str(count))
+        
+    sys.stdout.write("\n".join(output) + "\n")
+
+if __name__ == "__main__":
+    solve()
